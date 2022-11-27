@@ -17,7 +17,7 @@ module.exports = class Application {
     }
     configApplication(){
         this.#app.use(express.json());
-        this.#app.use(express.urlencoded({extends:true}));
+        this.#app.use(express.urlencoded({extended:true}));
         this.#app.use(express.static(path.join(__dirname, "..", "public")))
     }
     createServer(){
@@ -28,8 +28,8 @@ module.exports = class Application {
     connectToMongoDB(){
         mongoose.connect(this.#DB_URL, (error) => {
             if(!error) return console.log("connected to MongoDB");
+            return console.log(error);
         })
-        console.log("Faild to Connect to MongoDB");
     }
     errorHandling(){
         this.#app.use((req, res, next)=>{
