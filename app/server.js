@@ -1,6 +1,7 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-const path = require("path")
+const path = require("path");
+const { Routers } = require("./router/router");
 
 module.exports = class Application {
     #app = express()
@@ -48,5 +49,7 @@ module.exports = class Application {
             })
         })
     }
-    createRoutes(){}
+    createRoutes(){
+        this.#app.use(Routers)
+    }
 }
