@@ -29,7 +29,15 @@ module.exports = class Application {
     connectToMongoDB(){
         mongoose.connect(this.#DB_URL, (error) => {
             if(!error) return console.log("connected to MongoDB");
-            return console.log(error);
+            return console.log(error.message);
+        })
+        mongoose.connection.on("connected", ()=>{
+            console.log("Mongodb Connection Successfull !");
+        })
+
+        process.on("SIGINT", ()=>{
+            mongoose.connection.close();
+            process.exit(0)
         })
     }
     errorHandling(){
