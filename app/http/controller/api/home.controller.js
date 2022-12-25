@@ -5,11 +5,9 @@ const Controller = require("../controller");
 module.exports = new class HomeController extends Controller{
    async indexpage(req, res, next){
       try {
-         const result = await authSchema.validateAsync(req.body);
-         
          return res.status(200).send("this is index page ...")
       } catch (error) {
-         next(createHttpError.BadRequest(error.message))
+         next(error)
       }
    }
 }
