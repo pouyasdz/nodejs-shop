@@ -3,6 +3,9 @@ const { default: mongoose } = require("mongoose");
 const path = require("path");
 const { Routers } = require("./router/router");
 const createError = require("http-errors")
+const swaggerUI = require("swagger-ui-express");
+const swaggerJSDoc = require("swagger-jsdoc");
+
 
 module.exports = class Application {
     #app = express()
@@ -21,6 +24,27 @@ module.exports = class Application {
         this.#app.use(express.json());
         this.#app.use(express.urlencoded({extended:true}));
         this.#app.use(express.static(path.join(__dirname, "..", "public")))
+        this.#app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc({
+            swaggerDefinition : {
+                info:{
+                    title:"Electro Store",
+                    version:"1.0.0",
+                    description:"بزرگ ترین مرجع آموزش برنامه نویسی",
+                    contact:{
+                        name:"Pouya Sadeghzadeh",
+                        url:"https://localhost:300",
+                        email:"pouya.cc83@gmail.com"
+                    }
+                },
+                servers : [
+                    {
+                        url : "http://localhost:5000"
+                    }
+                ],
+            },
+            // api patch
+            apis : ['./app/router/**/*.js']
+        })))
     }
     createServer(){
         this.#app.listen(this.#PORT,()=>{
