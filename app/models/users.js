@@ -4,12 +4,12 @@ const Schema = new mongoose.Schema({
     first_name:{type:String},
     last_name:{type:String},
     username:{type:String, lowerCase:true},
-    mobile:{type:String},
+    mobile:{type:String, required: true},
     email:{type:String, lowerCase:true},
     password:{type:String},
-    otp:{type:String, default:{
+    otp:{type:Object, default:{
         code:0,
-        expires : new Date().getDate() + 120
+        expiresIn : 0
     }},
     bills:{type:[], default:[]},
     discount:{type:Number, default:0},
